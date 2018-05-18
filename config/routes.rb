@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
+  root to: 'todos#index'
+  
+  devise_for :users
+
   resources :todo_items
   resources :todos
-  root to: 'todos#index'
+  resources :users
 
-  devise_for :users
 end

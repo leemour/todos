@@ -1,15 +1,11 @@
-= form_for @todo do |f|
-  - if @todo.errors.any?
-    #error_explanation
-      h2 = "#{pluralize(@todo.errors.count, "error")} prohibited this todo from being saved:"
-      ul
-        - @todo.errors.full_messages.each do |message|
-          li = message
-
-  .field
-    = f.label :name
-    = f.text_field :name
-  .field
-    = f.label :user
-    = f.text_field :user
-  .actions = f.submit
+= form_for @todo, html: { class: "form form-horizontal todo" } do |f|
+  .form-group
+    = f.label :name, :class => 'control-label col-lg-2'
+    .col-lg-10
+      = f.text_field :name, :class => 'form-control'
+    = f.error_span(:name)
+  .form-group
+    .col-lg-offset-2.col-lg-10
+      = f.submit nil, :class => 'btn btn-primary'
+      '
+      = link_to t('.cancel', :default => t("helpers.links.cancel")), todos_path, :class => 'btn'

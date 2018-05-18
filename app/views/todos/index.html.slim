@@ -1,23 +1,35 @@
-h1 Listing todos
+- model_class = Todo
+.row
+  .col-sm-12
+    .page-header
+      h1=t '.title', :default => model_class.model_name.human.pluralize.titleize
 
-table
-  thead
-    tr
-      th Name
-      th User
-      th
-      th
-      th
+    - if @todos.present?
+      table.table.table-striped
+        thead
+          tr
+            th= model_class.human_attribute_name(:id)
+            th= model_class.human_attribute_name(:name)
+            th= model_class.human_attribute_name(:user)
+            th= model_class.human_attribute_name(:created_at)
+            th= model_class.human_attribute_name(:updated_at)
+            th=t '.actions', :default => t("helpers.actions")
+        tbody
+          - @todos.each do |todo|
+            tr
+              td= link_to todo.id, todo_path(todo)
+              td= todo.name
+              td= todo.user.email
+              td= todo.created_at.strftime('%d.%m.%Y %H:%M')
+              td= todo.updated_at.strftime('%d.%m.%Y %H:%M')
+              td
+                = link_to t('.show', :default => t("helpers.links.show")), todo_path(todo), :class => 'btn btn-default btn-xs'
+                '
+                = link_to t('.edit', :default => t("helpers.links.edit")), edit_todo_path(todo), :class => 'btn btn-default btn-xs'
+                '
+                = link_to t('.destroy', :default => t("helpers.links.destroy")), todo_path(todo), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-xs btn-danger'
+    - else
+      p= 'No todos yet'
 
-  tbody
-    - @todos.each do |todo|
-      tr
-        td = todo.name
-        td = todo.user
-        td = link_to 'Show', todo
-        td = link_to 'Edit', edit_todo_path(todo)
-        td = link_to 'Destroy', todo, data: { confirm: 'Are you sure?' }, method: :delete
-
-br
-
-= link_to 'New Todo', new_todo_path
+    - if user_signed_in?
+      = link_to t('.new', :default => t("helpers.links.new")), new_todo_path, :class => 'btn btn-primary'

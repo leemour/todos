@@ -1,27 +1,30 @@
-h1 Listing todo_items
-
-table
+- model_class = TodoItem
+.page-header
+  h1=t '.title', :default => model_class.model_name.human.pluralize.titleize
+table.table.table-striped
   thead
     tr
-      th Todo
-      th Text
-      th Due at
-      th Priority
-      th
-      th
-      th
-
+      th= model_class.human_attribute_name(:id)
+      th= model_class.human_attribute_name(:todo_id)
+      th= model_class.human_attribute_name(:text)
+      th= model_class.human_attribute_name(:due_at)
+      th= model_class.human_attribute_name(:priority)
+      th= model_class.human_attribute_name(:created_at)
+      th=t '.actions', :default => t("helpers.actions")
   tbody
     - @todo_items.each do |todo_item|
       tr
-        td = todo_item.todo
-        td = todo_item.text
-        td = todo_item.due_at
-        td = todo_item.priority
-        td = link_to 'Show', todo_item
-        td = link_to 'Edit', edit_todo_item_path(todo_item)
-        td = link_to 'Destroy', todo_item, data: { confirm: 'Are you sure?' }, method: :delete
+        td= link_to todo_item.id, todo_item_path(todo_item)
+        td= todo_item.todo_id
+        td= todo_item.text
+        td= todo_item.due_at
+        td= todo_item.priority
+        td=l todo_item.created_at
+        td
+          = link_to t('.show', :default => t("helpers.links.show")), todo_item_path(todo_item), :class => 'btn btn-default btn-xs'
+          '
+          = link_to t('.edit', :default => t("helpers.links.edit")), edit_todo_item_path(todo_item), :class => 'btn btn-default btn-xs'
+          '
+          = link_to t('.destroy', :default => t("helpers.links.destroy")), todo_item_path(todo_item), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-xs btn-danger'
 
-br
-
-= link_to 'New Todo item', new_todo_item_path
+= link_to t('.new', :default => t("helpers.links.new")), new_todo_item_path, :class => 'btn btn-primary'

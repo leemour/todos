@@ -1,8 +1,4 @@
-h1 Editing todo
-
-== render 'form'
-
-=> link_to 'Show', @todo
-'|
-=< link_to 'Back', todos_path
-
+- model_class = Todo
+.page-header
+  h1=t '.title', :default => [:'helpers.titles.edit', 'Edit %{model}'], :model => model_class.model_name.human.titleize
+= render :partial => "form"

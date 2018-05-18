@@ -1,0 +1,23 @@
+- dropdown ||= false
+- if user_signed_in?
+  - main_nav_items.each do |nav_item|
+    - if nav_item[:children]
+      li class="nav-item dropdown #{current_nav_item_class(nav_item)} #{nav_item_class if defined?(nav_item_class)}"
+        a.nav-link.dropdown-toggle aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" href="#" id="#{nav_item[:title].parameterize}-dropdown-nav" 
+          = nav_item[:title]
+        .dropdown-menu aria-labelledby="#{nav_item[:title].parameterize}-dropdown-nav" 
+          - nav_item[:children].each do |nav_item|
+            = link_to nav_item[:path], class: "dropdown-item #{current_nav_item_class(nav_item)}", method: nav_item[:method] do
+              = nav_item[:title]
+              == current_nav_item_meta(nav_item)
+    - else
+      li class=("#{dropdown ? 'dropdown-item' : 'nav-item'} #{current_nav_item_class(nav_item)}") 
+        = link_to nav_item[:path], class: "nav-link", method: nav_item[:method] do
+          = nav_item[:title]
+          == current_nav_item_meta(nav_item)
+- else
+  - guest_nav_items.each do |nav_item|
+    li class=("#{dropdown ? 'dropdown-item' : 'nav-item'} #{current_nav_item_class(nav_item)}") 
+      = link_to nav_item[:path], class: "nav-link", method: nav_item[:method] do
+        = nav_item[:title]
+        == current_nav_item_meta(nav_item)

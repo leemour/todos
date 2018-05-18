@@ -1,21 +1,26 @@
-= form_for @todo_item do |f|
-  - if @todo_item.errors.any?
-    #error_explanation
-      h2 = "#{pluralize(@todo_item.errors.count, "error")} prohibited this todo_item from being saved:"
-      ul
-        - @todo_item.errors.full_messages.each do |message|
-          li = message
-
-  .field
-    = f.label :todo
-    = f.text_field :todo
-  .field
-    = f.label :text
-    = f.text_area :text
-  .field
-    = f.label :due_at
-    = f.datetime_select :due_at
-  .field
-    = f.label :priority
-    = f.number_field :priority
-  .actions = f.submit
+= form_for @todo_item, html: { class: "form form-horizontal todo_item" } do |f|
+  .form-group
+    = f.label :todo_id, :class => 'control-label col-lg-2'
+    .col-lg-10
+      = f.text_field :todo_id, :class => 'form-control'
+    = f.error_span(:todo_id)
+  .form-group
+    = f.label :text, :class => 'control-label col-lg-2'
+    .col-lg-10
+      = f.text_field :text, :class => 'form-control'
+    = f.error_span(:text)
+  .form-group
+    = f.label :due_at, :class => 'control-label col-lg-2'
+    .col-lg-10
+      = f.text_field :due_at, :class => 'form-control'
+    = f.error_span(:due_at)
+  .form-group
+    = f.label :priority, :class => 'control-label col-lg-2'
+    .col-lg-10
+      = f.text_field :priority, :class => 'form-control'
+    = f.error_span(:priority)
+  .form-group
+    .col-lg-offset-2.col-lg-10
+      = f.submit nil, :class => 'btn btn-primary'
+      '
+      = link_to t('.cancel', :default => t("helpers.links.cancel")), todo_items_path, :class => 'btn'

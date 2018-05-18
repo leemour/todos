@@ -1,0 +1,8 @@
+.container
+  nav.navbar.navbar-expand-sm.navbar-dark.bg-dark
+    = link_to app_name, nav_brand_path, class: "navbar-brand"
+    button.navbar-toggler aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation" data-target="#mainNavbar" data-toggle="collapse" type="button" 
+      | ☰
+    #mainNavbar.collapse.navbar-collapse
+      ul.nav.navbar-nav
+        = render 'layouts/navigation_links'

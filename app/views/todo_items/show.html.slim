@@ -1,18 +1,26 @@
-p#notice = notice
+- model_class = TodoItem
+.page-header
+  h1=t '.title', :default => model_class.model_name.human.titleize
 
 p
-  strong Todo:
-  = @todo_item.todo
+  strong= model_class.human_attribute_name(:todo_id) + ':'
+  br
+  = @todo_item.todo_id
 p
-  strong Text:
+  strong= model_class.human_attribute_name(:text) + ':'
+  br
   = @todo_item.text
 p
-  strong Due at:
+  strong= model_class.human_attribute_name(:due_at) + ':'
+  br
   = @todo_item.due_at
 p
-  strong Priority:
+  strong= model_class.human_attribute_name(:priority) + ':'
+  br
   = @todo_item.priority
 
-=> link_to 'Edit', edit_todo_item_path(@todo_item)
-'|
-=< link_to 'Back', todo_items_path
+= link_to t('.back', :default => t("helpers.links.back")), todo_items_path, :class => 'btn btn-default'
+'
+= link_to t('.edit', :default => t("helpers.links.edit")), edit_todo_item_path(@todo_item), :class => 'btn btn-default'
+'
+= link_to t('.destroy', :default => t("helpers.links.destroy")), todo_item_path(@todo_item), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger'
