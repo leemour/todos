@@ -1,0 +1,18 @@
+p#notice = notice
+
+p
+  strong Todo:
+  = @todo_item.todo
+p
+  strong Text:
+  = @todo_item.text
+p
+  strong Due at:
+  = @todo_item.due_at
+p
+  strong Priority:
+  = @todo_item.priority
+
+=> link_to 'Edit', edit_todo_item_path(@todo_item)
+'|
+=< link_to 'Back', todo_items_path

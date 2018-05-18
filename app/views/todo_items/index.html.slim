@@ -1,0 +1,27 @@
+h1 Listing todo_items
+
+table
+  thead
+    tr
+      th Todo
+      th Text
+      th Due at
+      th Priority
+      th
+      th
+      th
+
+  tbody
+    - @todo_items.each do |todo_item|
+      tr
+        td = todo_item.todo
+        td = todo_item.text
+        td = todo_item.due_at
+        td = todo_item.priority
+        td = link_to 'Show', todo_item
+        td = link_to 'Edit', edit_todo_item_path(todo_item)
+        td = link_to 'Destroy', todo_item, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Todo item', new_todo_item_path

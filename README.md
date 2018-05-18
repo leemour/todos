@@ -1,4 +1,4 @@
-# TODO list
+# TODO list app
 
 ## Features
  
@@ -29,10 +29,10 @@ Steps:
 
     $ bundle
 
-Create user `todo` in PostgreSQL with DB `todo`:
+Create user `todos` in PostgreSQL with DB `todos`:
 
     $ sudo su postgres
-    $ createuser -S -d -R -e -l -P todo
+    $ createuser -S -d -R -e -l -P todos
 
 File `db/database.yml` uses credentials from `secrets.yml`. it __is__ supposed to be in repository and it should be __unchanged__. Edit `secrets.yml` to set your credentials. Keep all secrets inside `secrets.yml` as it's added to `.gitignore`.
 

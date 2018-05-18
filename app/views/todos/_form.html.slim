@@ -1,0 +1,15 @@
+= form_for @todo do |f|
+  - if @todo.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@todo.errors.count, "error")} prohibited this todo from being saved:"
+      ul
+        - @todo.errors.full_messages.each do |message|
+          li = message
+
+  .field
+    = f.label :name
+    = f.text_field :name
+  .field
+    = f.label :user
+    = f.text_field :user
+  .actions = f.submit

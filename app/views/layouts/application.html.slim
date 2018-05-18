@@ -1,0 +1,46 @@
+doctype html
+html.no-js lang=I18n.locale prefix="og: http://ogp.me/ns#"
+  head
+    meta charset="UTF-8"/
+    meta http-equiv="X-UA-Compatible" content="IE=edge"/
+    meta name="viewport" content="width=device-width, initial-scale=1.0"/
+    title= title(yield :title)
+    meta name="description" content=description(yield :description)
+    meta name="keywords" content=keywords(yield :keywords)
+    = yield :meta
+
+    - if Rails.env.production?
+      = stylesheet_link_tag 'application', async: true, defer: true, 'data-turbolinks-track': 'reload'
+    - else
+      = stylesheet_link_tag 'application/vendor', async: true, defer: true, 'data-turbolinks-track': 'reload'
+      = stylesheet_link_tag 'application/custom', async: true, defer: true, 'data-turbolinks-track': 'reload'
+
+    = favicon_link_tag 'favicon.icon'
+
+    = csrf_meta_tags
+
+    - if Rails.env.production?
+      = render 'common/analytics'
+
+
+  body class=body_class(yield :body_class)
+    #main
+      #wrapper
+        header#header
+          = render "layouts/application/header"
+        #content
+          = render "layouts/application/breadcrumbs"
+
+
+          = yield
+
+      footer#footer
+        = render 'layouts/application/footer'
+
+      = render "layouts/application/modals"
+
+    link#transcargo-default-font-css href='https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&amp;subset=latin,cyrillic' rel='stylesheet' type='text/css' media='screen' lazyload=""
+
+    = javascript_include_tag 'application', async: Rails.env.production?, defer: Rails.env.production?, 'data-turbolinks-track': 'reload'
+    / Include javascript per-view
+    = yield :javascript
