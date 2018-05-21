@@ -3,8 +3,12 @@ Rails.application.routes.draw do
   
   devise_for :users
 
-  resources :todo_items
+  resources :todo_items, only: [:index, :create, :update, :destroy] do
+    patch 'complete'
+  end
   resources :todos
-  resources :users
+  resources :users do
+    resources :todos, only: [:index]
+  end
 
 end

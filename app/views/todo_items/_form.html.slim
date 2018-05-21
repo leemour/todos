@@ -1,26 +1,19 @@
-= form_for @todo_item, html: { class: "form form-horizontal todo_item" } do |f|
-  .form-group
-    = f.label :todo_id, :class => 'control-label col-lg-2'
-    .col-lg-10
-      = f.text_field :todo_id, :class => 'form-control'
-    = f.error_span(:todo_id)
-  .form-group
-    = f.label :text, :class => 'control-label col-lg-2'
-    .col-lg-10
-      = f.text_field :text, :class => 'form-control'
+= form_for todo_item, remote: true, html: { class: "form form-horizontal d-none row", id: 'new-todo_item-form' } do |f|
+  = f.hidden_field :todo_id, value: todo.id
+  .col-8
+    = f.text_field :text, :class => 'form-control'
     = f.error_span(:text)
-  .form-group
-    = f.label :due_at, :class => 'control-label col-lg-2'
-    .col-lg-10
-      = f.text_field :due_at, :class => 'form-control'
+  .col-2
+    #datetimepicker-new.datetimepicker.input-group.date data-target-input="nearest" 
+      input.form-control.datetimepicker-input data-target="#datetimepicker-new" type="text" name='todo_item[due_at]'
+      .input-group-append data-target="#datetimepicker-new" data-toggle="datetimepicker" 
+        .input-group-text
+          i.fa.fa-calendar
     = f.error_span(:due_at)
-  .form-group
-    = f.label :priority, :class => 'control-label col-lg-2'
-    .col-lg-10
-      = f.text_field :priority, :class => 'form-control'
+  .col-2
+    = f.select :priority, TodoItem.priorities.keys.map {|pr| [pr, pr]}, {}, :class => 'form-control'
     = f.error_span(:priority)
-  .form-group
-    .col-lg-offset-2.col-lg-10
-      = f.submit nil, :class => 'btn btn-primary'
-      '
-      = link_to t('.cancel', :default => t("helpers.links.cancel")), todo_items_path, :class => 'btn'
+  .col-lg-offset-2.col-lg-10
+    = f.submit nil, :class => 'btn btn-primary'
+    '
+    = link_to t('.cancel', :default => t("helpers.links.cancel")), '#', :class => 'todo_item-form-toggle d-none btn'

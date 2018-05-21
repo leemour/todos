@@ -20,8 +20,13 @@ ActiveRecord::Schema.define(version: 2018_05_18_103049) do
     t.text "text"
     t.datetime "due_at"
     t.integer "priority"
+    t.integer "status", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["due_at"], name: "index_todo_items_on_due_at"
+    t.index ["priority"], name: "index_todo_items_on_priority"
+    t.index ["status"], name: "index_todo_items_on_status"
+    t.index ["text"], name: "index_todo_items_on_text"
     t.index ["todo_id"], name: "index_todo_items_on_todo_id"
   end
 

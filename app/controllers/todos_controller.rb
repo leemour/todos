@@ -10,6 +10,10 @@ class TodosController < ApplicationController
   # GET /todos/1
   # GET /todos/1.json
   def show
+    @todo_items = @todo.todo_items.
+      from_due_at(params[:from]).
+      to_due_at(params[:to]).
+      by_priority(params[:priority])
   end
 
   # GET /todos/new

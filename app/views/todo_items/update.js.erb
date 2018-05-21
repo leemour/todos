@@ -1,0 +1,4 @@
+(function() {
+  $('div.alert').remove();
+  $('main > .container').prepend('<%= j render 'layouts/messages' %>');
+})();

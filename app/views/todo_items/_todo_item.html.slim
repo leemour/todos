@@ -1,0 +1,22 @@
+li.todo-item.row id="todo_item#{item.id}" data-id=item.id class=('completed' if item.completed?) 
+  .col-1.todo-complete
+    input type="checkbox" checked=item.completed?
+
+  .col-7.todo-text
+    .edit-in-place= item.text
+    input type='text' class='todo-text-input form-control d-none'
+
+  .col-2.todo-due_at
+    .edit-in-place= due_at_display(item)
+    input.datetimepicker.datetimepicker-input.form-control.d-none data-target="#datetimepicker-todo#{item.id}" data-toggle="datetimepicker" type="text" id="datetimepicker-todo#{item.id}"
+
+  .col-1.todo-priority class=item.priority
+    .dropdown
+      button.btn.btn-priority.dropdown-toggle aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" type="button" id="priority-dropdown-#{item.id}" class=item.priority
+        span.d-none.d-sm-inline Priority
+      .dropdown-menu aria-labelledby="priority-dropdown-#{item.id}"
+        - TodoItem.priorities.keys.each do |priority| 
+          a.dropdown-item class=priority data-priority=priority href="#"=  priority
+
+  .col-1.todo-actions
+    = link_to '×', todo_item_path(item), title: 'delete', remote: true, :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, 'aria-label': "Close", 'aria-hidden': "true"

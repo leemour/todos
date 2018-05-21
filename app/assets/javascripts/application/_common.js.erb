@@ -1,0 +1,113 @@
+document.addEventListener("turbolinks:load", function() {
+  $('.datetimepicker').datetimepicker({
+    format: 'DD.MM.YYYY HH:mm',
+    icons: {
+      time: 'far fa-clock'
+    }
+  });
+
+
+  // Toggle New form
+  $('.todo_item-form-toggle').on('click', function(e) {
+    e.preventDefault(); e.stopPropagation();
+    $('.todo_item-form-toggle').toggleClass('d-none');
+    $('#new-todo_item-form').toggleClass('d-none');
+  });
+
+
+  // Complete/uncomplete item
+  $(document).on('change', '.todo-complete input', function(e) {
+    var todo   = $(this).closest('.todo-item');
+    var status = todo.hasClass('completed') ? 'active' : 'completed'
+    $.ajax('/todo_items/' + todo.data('id') + '/complete', {
+      method:   'PATCH',
+      dataType: 'script',
+      data: {
+        status: status
+      }
+    })
+  });
+
+
+  // Text Edit in place
+  $(document).on('click', '.todo-text .edit-in-place', function(e) {
+    var textBlock = $(this);
+    var input     = $(this.nextSibling);
+    var text      = textBlock.text()
+    textBlock.addClass('d-none');
+    input.val(text)
+    input.removeClass('d-none');
+    input.focus();
+  });
+
+  $(document).on('blur', '.todo-text .todo-text-input', function(e) {
+    var textBlock = $(this.previousSibling);
+    var input     = $(this)
+    var todo      = input.closest('.todo-item');
+    var text      = input.val()
+    textBlock.removeClass('d-none');
+    textBlock.text(text)
+    input.val('')
+    input.addClass('d-none');
+    $.ajax('/todo_items/' + todo.data('id'), {
+      method:   'PATCH',
+      dataType: 'script',
+      data: {
+        todo_item: { text: text }
+      }
+    })
+  });
+
+
+  // Priority at Edit in place
+  var colorClasses = <%= TodoItem.priorities.keys %>
+  $(document).on('click', '.todo-priority .dropdown-item', function(e) {
+    e.preventDefault(); e.stopPropagation();
+    var item     = $(this)
+    var todo     = item.closest('.todo-item');
+    var priority = item.data('priority');
+    var button   = item.closest('.todo-priority').find('.btn-priority')
+    var extraColorClasses = colorClasses.filter(function(a){ return a != priority })
+    button.removeClass(extraColorClasses.join(' ')).addClass(priority);
+    $.ajax('/todo_items/' + todo.data('id'), {
+      method:   'PATCH',
+      dataType: 'script',
+      data: {
+        todo_item: { priority: priority }
+      }
+    })
+  });
+
+
+  // Due at Edit in place
+  $(document).on('click', '.todo-due_at .edit-in-place', function(e) {
+    var textBlock  = $(this);
+    var datepicker = $(this.nextSibling);
+    var text       = textBlock.text()
+    textBlock.addClass('d-none');
+    datepicker.val(text)
+    datepicker.removeClass('d-none');
+    datepicker.click();
+    datepicker.focus();
+  });
+
+  $(document).on('blur', '.todo-due_at .datetimepicker', function(e) {
+    var textBlock  = $(this.previousSibling);
+    var datepicker = $(this)
+    var todo       = datepicker.closest('.todo-item');
+    var dueAt      = datepicker.val()
+    textBlock.removeClass('d-none');
+    datepicker.addClass('d-none');
+    if (dueAt === '' || dueAt === textBlock.text()) return
+    textBlock.html(dueAt.replace(', ', '<br>'))
+    $.ajax('/todo_items/' + todo.data('id'), {
+      method:   'PATCH',
+      dataType: 'script',
+      data: {
+        todo_item: { due_at: dueAt }
+      }
+    })
+  });
+
+
+});

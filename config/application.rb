@@ -43,5 +43,7 @@ module Todos
     config.eager_load_paths += %W(
       #{config.root}/lib
     )
+
+    config.sass.preferred_syntax = :sass
   end
 end

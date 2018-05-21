@@ -1,0 +1,6 @@
+(function() {
+  todo_item_el = $('#todo<%= @todo_item.todo_id %> #todo_item<%= @todo_item.id %>')
+  if (todo_item_el.length) {
+    todo_item_el.remove();
+  } 
+})();

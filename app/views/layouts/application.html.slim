@@ -15,6 +15,8 @@ html.no-js lang=I18n.locale prefix="og: http://ogp.me/ns#"
       = stylesheet_link_tag 'application/vendor', async: true, defer: true, 'data-turbolinks-track': 'reload'
       = stylesheet_link_tag 'application/custom', async: true, defer: true, 'data-turbolinks-track': 'reload'
 
+    = javascript_include_tag 'application', async: Rails.env.production?, defer: Rails.env.production?, 'data-turbolinks-track': 'reload'
+    
     = favicon_link_tag 'favicon.ico'
 
     = csrf_meta_tags
@@ -31,6 +33,5 @@ html.no-js lang=I18n.locale prefix="og: http://ogp.me/ns#"
       footer#footer
         = render 'layouts/footer'
 
-    = javascript_include_tag 'application', async: Rails.env.production?, defer: Rails.env.production?, 'data-turbolinks-track': 'reload'
     / Include javascript per-view
     = yield :javascript

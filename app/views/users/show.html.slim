@@ -11,6 +11,10 @@ p
   br
   = @user.email
 p
+  strong= model_class.human_attribute_name(:todos) + ':'
+  br
+  = link_to @user.todos.count, user_todos_path(@user)
+p
   strong= model_class.human_attribute_name(:current_sign_in_at) + ':'
   br
   = @user.current_sign_in_at.strftime('%d.%m.%Y %H:%M')

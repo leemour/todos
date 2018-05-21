@@ -1,18 +1,49 @@
 - model_class = Todo
-.page-header
-  h1=t '.title', :default => model_class.model_name.human.titleize
+div id="todo#{@todo.id}"
+  .row 
+    .col-6
+      .page-header
+        h1= @todo.name
+    .col-6
+      p.mt-3
+        strong= model_class.human_attribute_name(:user_id) + ': '
+        = link_to @todo.user.name, @todo.user
 
-p
-  strong= model_class.human_attribute_name(:name) + ':'
-  br
-  = @todo.name
-p
-  strong= model_class.human_attribute_name(:user_id) + ':'
-  br
-  = link_to @todo.user.name, @todo.user
+  
+  = form_with model: @todo, class: 'row filter', local: true, method: 'GET' do |f|
+    .col-6.col-sm-3
+      = label_tag :from
+      input#datetimepicker-from.datetimepicker.datetimepicker-input.form-control data-target="#datetimepicker-from" data-toggle="datetimepicker" type="text" name="from" value=params[:from]
+    .col-6.col-sm-3
+      = label_tag :to
+      input#datetimepicker-to.datetimepicker.datetimepicker-input.form-control data-target="#datetimepicker-to" data-toggle="datetimepicker" type="text" name="to" value=params[:to]
+    .col-6.col-sm-2
+      = label_tag :priority
+      = select_tag :priority, options_for_select(TodoItem.priorities.keys.map {|pr| [pr, pr]}.unshift(['Any', nil]), params[:priority]), :class => 'form-control'
+    .col-6.col-sm-2
+      button.filter-submit.btn.btn-primary 
+        | Filter
 
-= link_to t('.back', :default => t("helpers.links.back")), todos_path, :class => 'btn btn-default'
-'
-= link_to t('.edit', :default => t("helpers.links.edit")), edit_todo_path(@todo), :class => 'btn btn-default'
-'
-= link_to t('.destroy', :default => t("helpers.links.destroy")), todo_path(@todo), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger'
+  .row
+    .col-12.todo-list
+      ul
+        - if @todo_items.present?
+          - @todo_items.each do |item|
+            = render 'todo_items/todo_item', item: item
+        - else
+          li.row.no-items= 'No items found'
+      ul
+        li
+          = render 'todo_items/form', todo: @todo, todo_item: @todo.todo_items.build
+
+  .row.new-button
+    .col-12
+      = link_to t('.new_item'), '#', :class => 'todo_item-form-toggle btn btn-primary'
+
+  .row
+    .col-sm-12
+      = link_to t('.back', :default => t("helpers.links.back")), todos_path, :class => 'btn btn-default'
+      '
+      = link_to t('.edit', :default => t("helpers.links.edit")), edit_todo_path(@todo), :class => 'btn btn-default'
+      '
+      = link_to t('.destroy', :default => t("helpers.links.destroy")), todo_path(@todo), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger'

@@ -4,7 +4,15 @@ class TodoItemsController < ApplicationController
   # GET /todo_items
   # GET /todo_items.json
   def index
-    @todo_items = TodoItem.all
+    @todo_items = TodoItem.where(todo_id: params[:todo_id]).
+      from_due_at(params[:from]).
+      to_due_at(params[:to]).
+      by_priority(params[:priority])
+      
+    respond_to do |format|
+      format.html { }
+      format.js   { render layout: false }
+    end
   end
 
   # GET /todo_items/1
@@ -24,11 +32,10 @@ class TodoItemsController < ApplicationController
   # POST /todo_items
   # POST /todo_items.json
   def create
-    @todo_item = TodoItem.new(todo_item_params)
-
+    @todo_item = TodoItem.new(todo_item_create_params)
     respond_to do |format|
       if @todo_item.save
-        format.html { redirect_to @todo_item, notice: 'Todo item was successfully created.' }
+        format.html { redirect_to todo_path(@todo_item.todo_id), notice: 'Todo item was successfully created.' }
         format.json { render :show, status: :created, location: @todo_item }
       else
         format.html { render :new }
@@ -41,8 +48,9 @@ class TodoItemsController < ApplicationController
   # PATCH/PUT /todo_items/1.json
   def update
     respond_to do |format|
-      if @todo_item.update(todo_item_params)
-        format.html { redirect_to @todo_item, notice: 'Todo item was successfully updated.' }
+      if @todo_item.update(todo_item_update_params)
+        format.html { redirect_to todo_path(@todo_item.todo_id), notice: 'Todo item was successfully updated.' }
+        format.js   { render :update, layout: false, status: :ok }
         format.json { render :show, status: :ok, location: @todo_item }
       else
         format.html { render :edit }
@@ -57,7 +65,16 @@ class TodoItemsController < ApplicationController
     @todo_item.destroy
     respond_to do |format|
       format.html { redirect_to todo_items_url, notice: 'Todo item was successfully destroyed.' }
+      format.js   { render :destroy, layout: false }
       format.json { head :no_content }
+    end
+  end
+
+  def complete
+    @todo_item = TodoItem.find(params[:todo_item_id])
+    @todo_item.update(status: params[:status])
+    respond_to do |format|
+      format.js   { render :complete, layout: false }
     end
   end
 
@@ -68,7 +85,21 @@ class TodoItemsController < ApplicationController
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def todo_item_params
-      params.require(:todo_item).permit(:todo_id, :text, :due_at, :priority)
+    def todo_item_create_params
+      params.require(:todo_item).permit(
+        :todo_id, 
+        :text, 
+        :due_at, 
+        :priority
+      )
+    end
+
+    def todo_item_update_params
+      params.require(:todo_item).permit(
+        :text, 
+        :due_at, 
+        :priority, 
+        :status
+      )
     end
 end

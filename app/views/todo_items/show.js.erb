@@ -1,0 +1,9 @@
+(function() {
+  wrapper = $('#todo<%= @todo_item.todo_id %> .todo-list')
+  if (wrapper.find('ul').length) {
+    wrapper.find('ul').
+      append('<%= j render 'todo_item', item: @todo_item %>')
+  } else {
+    wrapper.html('<ul><%= j render 'todo_item', item: @todo_item %></ul>')
+  }
+})();

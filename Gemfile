@@ -21,6 +21,7 @@ gem 'font-awesome-sass'
 gem 'coffee-rails', '~> 4.2'
 gem 'jquery-rails'
 gem 'turbolinks', '~> 5'
+gem 'momentjs-rails'
 
 # Views
 gem 'slim-rails'
