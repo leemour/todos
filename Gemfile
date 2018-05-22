@@ -17,7 +17,7 @@ gem 'oj'
 gem 'uglifier', '>= 1.3.0'
 gem 'sass-rails', '~> 5.0'
 gem 'bootstrap'
-gem 'font-awesome-sass'
+gem 'font-awesome-sass', '~> 4.2'
 gem 'coffee-rails', '~> 4.2'
 gem 'jquery-rails'
 gem 'turbolinks', '~> 5'
@@ -26,6 +26,7 @@ gem 'momentjs-rails'
 # Views
 gem 'slim-rails'
 gem 'twitter-bootstrap-rails', require: false
+gem 'active_link_to'
 
 # UI
 gem 'chosen-rails'

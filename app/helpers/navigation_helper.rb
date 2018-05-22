@@ -63,4 +63,43 @@ module NavigationHelper
     paths += nav_item[:children].map {|c| c[:path] } if nav_item[:children]
     paths.find &self.method(:current_page?)
   end
+
+  def sortable_link(model, column, title=nil)
+    title ||= model.human_attribute_name(column)
+    title = title.titleize if title != 'ID'
+    order = if current_sort_column(model) == column.to_s &&
+      current_sort_order == 'asc'
+      "desc"
+    else
+      "asc"
+    end
+    css_class = 'sortable'
+    css_class += " current #{order}" if current_sort_column(model) == column.to_s
+
+    link_to title,
+      params.permit(:from, :to, :priority).merge(
+        sort: {
+          column: column,
+          order:  order
+        }
+      ),
+      class: css_class
+  end
+
+  def current_sort_column(model)
+    if params[:sort] && model.column_names.include?(params[:sort][:column])
+      params[:sort][:column]
+    else
+      "created_at"
+    end
+  end
+
+  def current_sort_order
+    if params[:sort] && %w[asc desc].include?(params[:sort][:order])
+      params[:sort][:order]
+    else
+      "asc"
+    end
+  end
+
 end

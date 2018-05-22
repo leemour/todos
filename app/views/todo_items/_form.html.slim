@@ -4,16 +4,12 @@
     = f.text_field :text, :class => 'form-control'
     = f.error_span(:text)
   .col-2
-    #datetimepicker-new.datetimepicker.input-group.date data-target-input="nearest" 
-      input.form-control.datetimepicker-input data-target="#datetimepicker-new" type="text" name='todo_item[due_at]'
-      .input-group-append data-target="#datetimepicker-new" data-toggle="datetimepicker" 
-        .input-group-text
-          i.fa.fa-calendar
+    input#datetimepicker-new.datetimepicker.datetimepicker-input.form-control data-target="#datetimepicker-new" data-toggle="datetimepicker" type="text" name="new"
     = f.error_span(:due_at)
   .col-2
     = f.select :priority, TodoItem.priorities.keys.map {|pr| [pr, pr]}, {}, :class => 'form-control'
     = f.error_span(:priority)
-  .col-lg-offset-2.col-lg-10
+  .col-lg-offset-2.col-lg-10.mt-2
     = f.submit nil, :class => 'btn btn-primary'
     '
     = link_to t('.cancel', :default => t("helpers.links.cancel")), '#', :class => 'todo_item-form-toggle d-none btn'

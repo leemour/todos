@@ -1,16 +1,16 @@
 - model_class = Todo
 div id="todo#{@todo.id}"
-  .row 
-    .col-6
+  .row.justify-content-center
+    .col-7.col-sm-6.col-md-5
       .page-header
         h1= @todo.name
-    .col-6
+    .col-5.col-sm-4.col-md-3
       p.mt-3
         strong= model_class.human_attribute_name(:user_id) + ': '
         = link_to @todo.user.name, @todo.user
 
   
-  = form_with model: @todo, class: 'row filter', local: true, method: 'GET' do |f|
+  = form_with model: @todo, class: 'row filter justify-content-center mt-3', local: true, method: 'GET' do |f|
     .col-6.col-sm-3
       = label_tag :from
       input#datetimepicker-from.datetimepicker.datetimepicker-input.form-control data-target="#datetimepicker-from" data-toggle="datetimepicker" type="text" name="from" value=params[:from]
@@ -24,7 +24,14 @@ div id="todo#{@todo.id}"
       button.filter-submit.btn.btn-primary 
         | Filter
 
-  .row
+  .row.justify-content-center.mt-3
+    .col-5.col-sm-3
+      = sortable_link TodoItem, :due_at
+    .col-5.col-sm-3
+      = sortable_link TodoItem, :priority
+      
+
+  .row.justify-content-center
     .col-12.todo-list
       ul
         - if @todo_items.present?

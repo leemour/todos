@@ -1,6 +1,6 @@
 module ApplicationHelper
   def app_name
-    'Todos'
+    'TodoApp'
   end
 
   def title(text)

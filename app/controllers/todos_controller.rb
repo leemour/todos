@@ -1,4 +1,6 @@
 class TodosController < ApplicationController
+  before_action :authenticate_user!, except: [:index]
+
   before_action :set_todo, only: [:show, :edit, :update, :destroy]
 
   # GET /todos
@@ -13,7 +15,8 @@ class TodosController < ApplicationController
     @todo_items = @todo.todo_items.
       from_due_at(params[:from]).
       to_due_at(params[:to]).
-      by_priority(params[:priority])
+      by_priority(params[:priority]).
+      order_by(params[:sort])
   end
 
   # GET /todos/new

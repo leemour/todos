@@ -7,17 +7,17 @@
           = nav_item[:title]
         .dropdown-menu aria-labelledby="#{nav_item[:title].parameterize}-dropdown-nav" 
           - nav_item[:children].each do |nav_item|
-            = link_to nav_item[:path], class: "dropdown-item #{current_nav_item_class(nav_item)}", method: nav_item[:method] do
+            = active_link_to nav_item[:path], class: "dropdown-item #{current_nav_item_class(nav_item)}", method: nav_item[:method] do
               = nav_item[:title]
               == current_nav_item_meta(nav_item)
     - else
       li class=("#{dropdown ? 'dropdown-item' : 'nav-item'} #{current_nav_item_class(nav_item)}") 
-        = link_to nav_item[:path], class: "nav-link", method: nav_item[:method] do
+        = active_link_to nav_item[:path], class: "nav-link", method: nav_item[:method] do
           = nav_item[:title]
           == current_nav_item_meta(nav_item)
 - else
   - guest_nav_items.each do |nav_item|
     li class=("#{dropdown ? 'dropdown-item' : 'nav-item'} #{current_nav_item_class(nav_item)}") 
-      = link_to nav_item[:path], class: "nav-link", method: nav_item[:method] do
+      = active_link_to nav_item[:path], class: "nav-link", method: nav_item[:method] do
         = nav_item[:title]
         == current_nav_item_meta(nav_item)

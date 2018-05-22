@@ -1,4 +1,6 @@
 class TodoItem < ApplicationRecord
+  include Sortable
+  
   belongs_to :todo
   has_one :user, through: :todo
 
