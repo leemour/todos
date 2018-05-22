@@ -3,8 +3,6 @@ class TodoItemsController < ApplicationController
 
   before_action :set_todo_item, only: [:show, :edit, :update, :destroy]
 
-  # GET /todo_items
-  # GET /todo_items.json
   def index
     @todo_items = TodoItem.where(todo_id: params[:todo_id]).
       from_due_at(params[:from]).
@@ -17,22 +15,16 @@ class TodoItemsController < ApplicationController
     end
   end
 
-  # GET /todo_items/1
-  # GET /todo_items/1.json
   def show
   end
 
-  # GET /todo_items/new
   def new
     @todo_item = TodoItem.new
   end
 
-  # GET /todo_items/1/edit
   def edit
   end
 
-  # POST /todo_items
-  # POST /todo_items.json
   def create
     @todo_item = TodoItem.new(todo_item_create_params)
     respond_to do |format|
@@ -46,8 +38,6 @@ class TodoItemsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /todo_items/1
-  # PATCH/PUT /todo_items/1.json
   def update
     respond_to do |format|
       if @todo_item.update(todo_item_update_params)
@@ -61,8 +51,6 @@ class TodoItemsController < ApplicationController
     end
   end
 
-  # DELETE /todo_items/1
-  # DELETE /todo_items/1.json
   def destroy
     @todo_item.destroy
     respond_to do |format|
@@ -81,27 +69,26 @@ class TodoItemsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_todo_item
-      @todo_item = TodoItem.find(params[:id])
-    end
+  
+  def set_todo_item
+    @todo_item = TodoItem.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def todo_item_create_params
-      params.require(:todo_item).permit(
-        :todo_id, 
-        :text, 
-        :due_at, 
-        :priority
-      )
-    end
+  def todo_item_create_params
+    params.require(:todo_item).permit(
+      :todo_id, 
+      :text, 
+      :due_at, 
+      :priority
+    )
+  end
 
-    def todo_item_update_params
-      params.require(:todo_item).permit(
-        :text, 
-        :due_at, 
-        :priority, 
-        :status
-      )
-    end
+  def todo_item_update_params
+    params.require(:todo_item).permit(
+      :text, 
+      :due_at, 
+      :priority, 
+      :status
+    )
+  end
 end

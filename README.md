@@ -12,7 +12,7 @@
 OPTIONAL: 
 
 8. Provide​ a ​RESTful​ API​ which​ will​ allow​ a ​third-party​ application​ to​ trigger​ actions​ on​ your app​ (same​ actions​ available​ in​ the​ app). 
-9. Provide​ authentication​ and​ authorization​ service​ for​ both​ the​ app​ and​ the​ API. 
+~9. Provide​ authentication​ and​ authorization​ service​ for​ both​ the​ app​ and​ the​ API.~
 ~10. As​ complementary​ to​ the​ last​ item,​ one​ should​ be​ able​ to​ create​ users​ in​ the​ system​ via an​ interface,​ probably​ a ​signup/register​ screen.~
 
 ## Dependencies

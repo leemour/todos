@@ -8,10 +8,8 @@ gem 'rails', '~> 5.2.0'
 # Server
 gem 'puma', '~> 3.11'
 
-# DB & JSON
+# DB
 gem 'pg', "~> 0.18"
-gem 'jbuilder', '~> 2.5'
-gem 'oj'
 
 # Assets, JS
 gem 'uglifier', '>= 1.3.0'
@@ -34,6 +32,10 @@ gem 'kaminari'
 
 # Auth
 gem 'devise'
+
+# API
+gem 'fast_jsonapi'
+gem 'oj'
 
 # Misc
 gem 'bootsnap', '>= 1.1.0', require: false
