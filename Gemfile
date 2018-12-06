@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.5.1'
+ruby '2.5.3'
 
 gem 'rails', '~> 5.2.0'
 
@@ -58,6 +58,7 @@ group :development do
   gem 'guard-rspec'
   gem 'guard-livereload'
   gem 'rack-livereload'
+  gem 'rubocop'
 
   group :deploy do
     gem 'capistrano-rails', require: false
